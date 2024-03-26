@@ -30,11 +30,14 @@ when ODIN_OS == .Windows {
         }
     }
 }
+else when ODIN_OS == .Freestanding {
+    
+}
 else {
     when ODIN_DEBUG == true { foreign import sokol_log_clib { "sokol_log_linux_x64_gl_debug.a" } }
     else                    { foreign import sokol_log_clib { "sokol_log_linux_x64_gl_release.a" } }
 }
 @(default_calling_convention="c", link_prefix="slog_")
-foreign sokol_log_clib {
+foreign /* sokol_log_clib */ {
     func :: proc(tag: cstring, log_level: u32, log_item: u32, message: cstring, line_nr: u32, filename: cstring, user_data: rawptr)  ---
 }

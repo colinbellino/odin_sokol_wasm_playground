@@ -30,13 +30,24 @@ when ODIN_OS == .Windows {
             else                    { foreign import sokol_glue_clib { "sokol_glue_macos_x64_metal_release.a" } }
         }
     }
+} else when ODIN_OS == .Freestanding {
+
 }
 else {
     when ODIN_DEBUG == true { foreign import sokol_glue_clib { "sokol_glue_linux_x64_gl_debug.a" } }
     else                    { foreign import sokol_glue_clib { "sokol_glue_linux_x64_gl_release.a" } }
 }
-@(default_calling_convention="c")
-foreign sokol_glue_clib {
-    @(link_name="sapp_sgcontext")
-    ctx :: proc() -> sg.Context_Desc ---
+
+when ODIN_OS == .Freestanding {
+    @(default_calling_convention="c")
+    foreign {
+        @(link_name="sapp_sgcontext")
+        ctx :: proc() -> sg.Context_Desc ---
+    }
+} else {
+    @(default_calling_convention="c")
+    foreign sokol_glue_clib {
+        @(link_name="sapp_sgcontext")
+        ctx :: proc() -> sg.Context_Desc ---
+    }
 }

@@ -1,2 +1,5 @@
 .DS_Store
-main.wasm
+odin.wasm.o
+index.js
+index.wasm
+index.html

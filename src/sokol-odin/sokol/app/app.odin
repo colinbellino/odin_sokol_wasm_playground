@@ -29,72 +29,134 @@ when ODIN_OS == .Windows {
             else                    { foreign import sokol_app_clib { "sokol_app_macos_x64_metal_release.a", "system:Cocoa.framework","system:QuartzCore.framework","system:Metal.framework","system:MetalKit.framework" } }
         }
     }
-} else when ODIN_OS == .JS {
-    when ODIN_DEBUG == true { foreign import sokol_app_clib { "sokol_app_wasm_gl_debug.a" } }
-    else                    { foreign import sokol_app_clib { "sokol_app_wasm_gl_release.a" } }
+} else when ODIN_OS == .Freestanding {
+
 }
 else {
     when ODIN_DEBUG == true { foreign import sokol_app_clib { "sokol_app_linux_x64_gl_debug.a", "system:X11", "system:Xi", "system:Xcursor", "system:GL", "system:dl", "system:pthread" } }
     else                    { foreign import sokol_app_clib { "sokol_app_linux_x64_gl_release.a", "system:X11", "system:Xi", "system:Xcursor", "system:GL", "system:dl", "system:pthread" } }
 }
-@(default_calling_convention="c", link_prefix="sapp_")
-foreign sokol_app_clib {
-    isvalid :: proc() -> bool ---
-    width :: proc() -> c.int ---
-    widthf :: proc() -> f32 ---
-    height :: proc() -> c.int ---
-    heightf :: proc() -> f32 ---
-    color_format :: proc() -> c.int ---
-    depth_format :: proc() -> c.int ---
-    sample_count :: proc() -> c.int ---
-    high_dpi :: proc() -> bool ---
-    dpi_scale :: proc() -> f32 ---
-    show_keyboard :: proc(show: bool)  ---
-    keyboard_shown :: proc() -> bool ---
-    is_fullscreen :: proc() -> bool ---
-    toggle_fullscreen :: proc()  ---
-    show_mouse :: proc(show: bool)  ---
-    mouse_shown :: proc() -> bool ---
-    lock_mouse :: proc(lock: bool)  ---
-    mouse_locked :: proc() -> bool ---
-    set_mouse_cursor :: proc(cursor: Mouse_Cursor)  ---
-    get_mouse_cursor :: proc() -> Mouse_Cursor ---
-    userdata :: proc() -> rawptr ---
-    query_desc :: proc() -> Desc ---
-    request_quit :: proc()  ---
-    cancel_quit :: proc()  ---
-    quit :: proc()  ---
-    consume_event :: proc()  ---
-    frame_count :: proc() -> u64 ---
-    frame_duration :: proc() -> f64 ---
-    set_clipboard_string :: proc(str: cstring)  ---
-    get_clipboard_string :: proc() -> cstring ---
-    set_window_title :: proc(str: cstring)  ---
-    set_icon :: proc(#by_ptr icon_desc: Icon_Desc)  ---
-    get_num_dropped_files :: proc() -> c.int ---
-    get_dropped_file_path :: proc(#any_int index: c.int) -> cstring ---
-    run :: proc(#by_ptr desc: Desc)  ---
-    egl_get_display :: proc() -> rawptr ---
-    egl_get_context :: proc() -> rawptr ---
-    html5_ask_leave_site :: proc(ask: bool)  ---
-    html5_get_dropped_file_size :: proc(#any_int index: c.int) -> u32 ---
-    html5_fetch_dropped_file :: proc(#by_ptr request: Html5_Fetch_Request)  ---
-    metal_get_device :: proc() -> rawptr ---
-    metal_get_renderpass_descriptor :: proc() -> rawptr ---
-    metal_get_drawable :: proc() -> rawptr ---
-    macos_get_window :: proc() -> rawptr ---
-    ios_get_window :: proc() -> rawptr ---
-    d3d11_get_device :: proc() -> rawptr ---
-    d3d11_get_device_context :: proc() -> rawptr ---
-    d3d11_get_swap_chain :: proc() -> rawptr ---
-    d3d11_get_render_target_view :: proc() -> rawptr ---
-    d3d11_get_depth_stencil_view :: proc() -> rawptr ---
-    win32_get_hwnd :: proc() -> rawptr ---
-    wgpu_get_device :: proc() -> rawptr ---
-    wgpu_get_render_view :: proc() -> rawptr ---
-    wgpu_get_resolve_view :: proc() -> rawptr ---
-    wgpu_get_depth_stencil_view :: proc() -> rawptr ---
-    android_get_native_activity :: proc() -> rawptr ---
+
+when ODIN_OS == .Freestanding {
+    @(default_calling_convention="c", link_prefix="sapp_")
+    foreign {
+        isvalid :: proc() -> bool ---
+        width :: proc() -> c.int ---
+        widthf :: proc() -> f32 ---
+        height :: proc() -> c.int ---
+        heightf :: proc() -> f32 ---
+        color_format :: proc() -> c.int ---
+        depth_format :: proc() -> c.int ---
+        sample_count :: proc() -> c.int ---
+        high_dpi :: proc() -> bool ---
+        dpi_scale :: proc() -> f32 ---
+        show_keyboard :: proc(show: bool)  ---
+        keyboard_shown :: proc() -> bool ---
+        is_fullscreen :: proc() -> bool ---
+        toggle_fullscreen :: proc()  ---
+        show_mouse :: proc(show: bool)  ---
+        mouse_shown :: proc() -> bool ---
+        lock_mouse :: proc(lock: bool)  ---
+        mouse_locked :: proc() -> bool ---
+        set_mouse_cursor :: proc(cursor: Mouse_Cursor)  ---
+        get_mouse_cursor :: proc() -> Mouse_Cursor ---
+        userdata :: proc() -> rawptr ---
+        query_desc :: proc() -> Desc ---
+        request_quit :: proc()  ---
+        cancel_quit :: proc()  ---
+        quit :: proc()  ---
+        consume_event :: proc()  ---
+        frame_count :: proc() -> u64 ---
+        frame_duration :: proc() -> f64 ---
+        set_clipboard_string :: proc(str: cstring)  ---
+        get_clipboard_string :: proc() -> cstring ---
+        set_window_title :: proc(str: cstring)  ---
+        set_icon :: proc(#by_ptr icon_desc: Icon_Desc)  ---
+        get_num_dropped_files :: proc() -> c.int ---
+        get_dropped_file_path :: proc(#any_int index: c.int) -> cstring ---
+        run :: proc(#by_ptr desc: Desc)  ---
+        egl_get_display :: proc() -> rawptr ---
+        egl_get_context :: proc() -> rawptr ---
+        html5_ask_leave_site :: proc(ask: bool)  ---
+        html5_get_dropped_file_size :: proc(#any_int index: c.int) -> u32 ---
+        html5_fetch_dropped_file :: proc(#by_ptr request: Html5_Fetch_Request)  ---
+        metal_get_device :: proc() -> rawptr ---
+        metal_get_renderpass_descriptor :: proc() -> rawptr ---
+        metal_get_drawable :: proc() -> rawptr ---
+        macos_get_window :: proc() -> rawptr ---
+        ios_get_window :: proc() -> rawptr ---
+        d3d11_get_device :: proc() -> rawptr ---
+        d3d11_get_device_context :: proc() -> rawptr ---
+        d3d11_get_swap_chain :: proc() -> rawptr ---
+        d3d11_get_render_target_view :: proc() -> rawptr ---
+        d3d11_get_depth_stencil_view :: proc() -> rawptr ---
+        win32_get_hwnd :: proc() -> rawptr ---
+        wgpu_get_device :: proc() -> rawptr ---
+        wgpu_get_render_view :: proc() -> rawptr ---
+        wgpu_get_resolve_view :: proc() -> rawptr ---
+        wgpu_get_depth_stencil_view :: proc() -> rawptr ---
+        android_get_native_activity :: proc() -> rawptr ---
+    }
+} else {
+    @(default_calling_convention="c", link_prefix="sapp_")
+    foreign sokol_app_clib {
+        isvalid :: proc() -> bool ---
+        width :: proc() -> c.int ---
+        widthf :: proc() -> f32 ---
+        height :: proc() -> c.int ---
+        heightf :: proc() -> f32 ---
+        color_format :: proc() -> c.int ---
+        depth_format :: proc() -> c.int ---
+        sample_count :: proc() -> c.int ---
+        high_dpi :: proc() -> bool ---
+        dpi_scale :: proc() -> f32 ---
+        show_keyboard :: proc(show: bool)  ---
+        keyboard_shown :: proc() -> bool ---
+        is_fullscreen :: proc() -> bool ---
+        toggle_fullscreen :: proc()  ---
+        show_mouse :: proc(show: bool)  ---
+        mouse_shown :: proc() -> bool ---
+        lock_mouse :: proc(lock: bool)  ---
+        mouse_locked :: proc() -> bool ---
+        set_mouse_cursor :: proc(cursor: Mouse_Cursor)  ---
+        get_mouse_cursor :: proc() -> Mouse_Cursor ---
+        userdata :: proc() -> rawptr ---
+        query_desc :: proc() -> Desc ---
+        request_quit :: proc()  ---
+        cancel_quit :: proc()  ---
+        quit :: proc()  ---
+        consume_event :: proc()  ---
+        frame_count :: proc() -> u64 ---
+        frame_duration :: proc() -> f64 ---
+        set_clipboard_string :: proc(str: cstring)  ---
+        get_clipboard_string :: proc() -> cstring ---
+        set_window_title :: proc(str: cstring)  ---
+        set_icon :: proc(#by_ptr icon_desc: Icon_Desc)  ---
+        get_num_dropped_files :: proc() -> c.int ---
+        get_dropped_file_path :: proc(#any_int index: c.int) -> cstring ---
+        run :: proc(#by_ptr desc: Desc)  ---
+        egl_get_display :: proc() -> rawptr ---
+        egl_get_context :: proc() -> rawptr ---
+        html5_ask_leave_site :: proc(ask: bool)  ---
+        html5_get_dropped_file_size :: proc(#any_int index: c.int) -> u32 ---
+        html5_fetch_dropped_file :: proc(#by_ptr request: Html5_Fetch_Request)  ---
+        metal_get_device :: proc() -> rawptr ---
+        metal_get_renderpass_descriptor :: proc() -> rawptr ---
+        metal_get_drawable :: proc() -> rawptr ---
+        macos_get_window :: proc() -> rawptr ---
+        ios_get_window :: proc() -> rawptr ---
+        d3d11_get_device :: proc() -> rawptr ---
+        d3d11_get_device_context :: proc() -> rawptr ---
+        d3d11_get_swap_chain :: proc() -> rawptr ---
+        d3d11_get_render_target_view :: proc() -> rawptr ---
+        d3d11_get_depth_stencil_view :: proc() -> rawptr ---
+        win32_get_hwnd :: proc() -> rawptr ---
+        wgpu_get_device :: proc() -> rawptr ---
+        wgpu_get_render_view :: proc() -> rawptr ---
+        wgpu_get_resolve_view :: proc() -> rawptr ---
+        wgpu_get_depth_stencil_view :: proc() -> rawptr ---
+        android_get_native_activity :: proc() -> rawptr ---
+    }
 }
 MAX_TOUCHPOINTS :: 8
 MAX_MOUSEBUTTONS :: 3
