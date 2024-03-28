@@ -16,8 +16,7 @@ frame_arena := mem.Arena { data = frame_arena_buffer[:] }
 
 pass_action: sg.Pass_Action
 
-@(export, link_name="_main")
-_main :: proc "c" () {
+@(export) _main :: proc "c" () {
     ctx = runtime.default_context()
     context = ctx
     
@@ -27,7 +26,6 @@ _main :: proc "c" () {
     sapp.run({
         init_cb = init,
         frame_cb = frame,
-        cleanup_cb = cleanup,
         width = 960,
         height = 540,
         window_title = "clear",
@@ -38,8 +36,7 @@ _main :: proc "c" () {
     })
 }
 
-@(export, link_name="_step")
-_step :: proc "c" () { }
+@(export) _step :: proc "c" () { }
 
 init :: proc "c" () {
     context = ctx
@@ -48,14 +45,6 @@ init :: proc "c" () {
         logger = { func = slog.func },
     })
     pass_action.colors[0] = { load_action = .CLEAR, clear_value = { 1.0, 0.0, 0.0, 1.0 } }
-
-    // switch sg.query_backend() {
-    //     case .D3D11: fmt.println(">> using D3D11 backend")
-    //     case .GLCORE33, .GLES3: fmt.println(">> using GL backend")
-    //     case .METAL_MACOS, .METAL_IOS, .METAL_SIMULATOR: fmt.println(">> using Metal backend")
-    //     case .WGPU: fmt.println(">> using WebGPU backend")
-    //     case .DUMMY: fmt.println(">> using dummy backend")
-    // }
 }
 
 frame :: proc "c" () {
@@ -65,9 +54,4 @@ frame :: proc "c" () {
     sg.begin_default_pass(pass_action, sapp.width(), sapp.height())
     sg.end_pass()
     sg.commit()
-}
-
-cleanup :: proc "c" () {
-    // context = ctx
-    // sg.shutdown()
 }

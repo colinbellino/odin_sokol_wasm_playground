@@ -6,6 +6,6 @@ extern void _step();
 
 int main() {
     _main();
-    emscripten_set_main_loop(_step, 0, 1);
+    // emscripten_set_main_loop(_step, 0, 1);
     return 0;
 }
