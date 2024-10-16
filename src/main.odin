@@ -36,8 +36,6 @@ pass_action: sg.Pass_Action
     })
 }
 
-@(export) _step :: proc "c" () { }
-
 init :: proc "c" () {
     context = ctx
     sg.setup({
