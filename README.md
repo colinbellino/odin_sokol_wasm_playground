@@ -1,9 +1,5 @@
-## Odin Sokol WASM playground
-
-Build the app: 
-- Run `./build.sh`. (Outputs in dist/freestanding_wasm_debug by default).
-- Serve the folder. (Something like `python -m http.server 8080 --bind 127.0.0.1 --directory ./dist/freestanding_wasm32_debug/`, but any tool that can app serve static assets should work.)
-- Open in a browser. (http://127.0.0.1:8080 for example)
-
-This should give you something like that:
-![odin_sokol_wasm_clear_color.png](odin_sokol_wasm_clear_color.png)
+TODO jai version:
+- UTF8ToString is fucking up because we are using the Memory64 flag and we are patching it manually for now
+- https://github.com/libsdl-org/SDL/issues/8241
+- https://github.com/emscripten-core/emscripten/issues/21541
+- https://github.com/emscripten-core/emscripten/blob/6b8afa59354ec165e6be966c8e891170c4e3c5bd/tests/test_core.py#L5043

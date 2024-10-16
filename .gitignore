@@ -1,5 +1,3 @@
 .DS_Store
-odin.wasm.o
-index.js
-index.wasm
-index.html
+dist/
+.build/
